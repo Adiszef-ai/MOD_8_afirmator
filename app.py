@@ -58,7 +58,7 @@ st.set_page_config(page_title="Generator Afirmacji AI", page_icon="✨", layout=
 
 # env = dotenv_values(".env")
 # api_key = env.get("OPENAI_API_KEY") or st.session_state.api_key
-api_key = st.secrets["OPENAI_API_KEY"]
+api_key = st.secrets["openai"]["OPENAI_API_KEY"]
 
 if not api_key:
     st.warning("Brak klucza API w pliku .env! Wprowadź swój klucz poniżej:")
@@ -70,7 +70,11 @@ if not api_key:
 if not st.session_state.api_key:
     st.stop()
 
-client = OpenAI(api_key=st.session_state.api_key)
+if "openai" not in st.secrets:
+    st.error("Brak konfiguracji sekretów OpenAI!")
+    st.stop()
+
+client = OpenAI(api_key=st.secrets["openai"]["OPENAI_API_KEY"])
 
 # --------------------------
 # Interfejs użytkownika

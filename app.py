@@ -1,7 +1,7 @@
 import streamlit as st
 import base64
 from openai import OpenAI
-from dotenv import dotenv_values
+# from dotenv import dotenv_values
 
 # --------------------------
 # Stałe i konfiguracja
@@ -56,8 +56,9 @@ def save_to_history(affirmation):
 
 st.set_page_config(page_title="Generator Afirmacji AI", page_icon="✨", layout="centered")
 
-env = dotenv_values(".env")
-api_key = env.get("OPENAI_API_KEY") or st.session_state.api_key
+# env = dotenv_values(".env")
+# api_key = env.get("OPENAI_API_KEY") or st.session_state.api_key
+api_key = st.secrets["OPENAI_API_KEY"]
 
 if not api_key:
     st.warning("Brak klucza API w pliku .env! Wprowadź swój klucz poniżej:")

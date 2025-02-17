@@ -1,7 +1,6 @@
 import streamlit as st
 import base64
 from openai import OpenAI
-# from dotenv import dotenv_values
 
 # --------------------------
 # Stałe i konfiguracja
@@ -56,25 +55,18 @@ def save_to_history(affirmation):
 
 st.set_page_config(page_title="Generator Afirmacji AI", page_icon="✨", layout="centered")
 
-# env = dotenv_values(".env")
-# api_key = env.get("OPENAI_API_KEY") or st.session_state.api_key
-api_key = st.secrets["openai"]["OPENAI_API_KEY"]
-
-if not api_key:
-    st.warning("Brak klucza API w pliku .env! Wprowadź swój klucz poniżej:")
-    api_key = st.text_input("Wpisz swój klucz API OpenAI:", type="password")
+# Sprawdzenie i pobranie API Key
+if not st.session_state.api_key:
+    st.warning("Proszę wprowadzić klucz API OpenAI:")
+    api_key = st.text_input("Wpisz swój klucz API OpenAI:", type="password", key="api_input")
+    
     if api_key:
         st.session_state.api_key = api_key
         st.rerun()
+    else:
+        st.stop()
 
-if not st.session_state.api_key:
-    st.stop()
-
-if "openai" not in st.secrets:
-    st.error("Brak konfiguracji sekretów OpenAI!")
-    st.stop()
-
-client = OpenAI(api_key=st.secrets["openai"]["OPENAI_API_KEY"])
+client = OpenAI(api_key=st.session_state.api_key)
 
 # --------------------------
 # Interfejs użytkownika

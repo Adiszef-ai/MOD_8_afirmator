@@ -7,7 +7,7 @@ from openai import OpenAI
 # --------------------------
 
 VOICE_OPTIONS = {
-    "Jasny syntetyczny": "alloy",
+    "Jasny klarowny": "alloy",
     "Głęboki dramatyczny": "echo",
     "Ciepły narracyjny": "fable",
     "Mocny autorytatywny": "onyx",
@@ -73,6 +73,7 @@ client = OpenAI(api_key=st.session_state.api_key)
 # --------------------------
 
 st.markdown("<h1 style='text-align: center;'>✨ AFIRMATOR ✨</h1>", unsafe_allow_html=True)
+st.markdown('<div style="height: 40px;"></div>', unsafe_allow_html=True)
 st.markdown("Wypełnij poniższe pola, a AI stworzy dla Ciebie unikalną afirmację!")
 
 with st.form("afirmation_form", border=False):
